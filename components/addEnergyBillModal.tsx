@@ -21,9 +21,9 @@ const buildings: Building[] = [
 
 const AddEnergyBillModal: React.FC = () => {
     return (
-        <Dialog defaultOpen>
+        <Dialog>
             <DialogTrigger asChild>
-                <Button className="h-7"> <PlusIcon className="mr-2"/>Energy Bill</Button>
+                <Button className="h-10 xl:h-7"> <PlusIcon className="mr-2"/>Energy Bill</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[500px]">
                 <DialogHeader>

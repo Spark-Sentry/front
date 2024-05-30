@@ -1,6 +1,5 @@
 'use client'
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
-import { ResponsiveLine } from "@nivo/line"
 import {Button} from "@/components/ui/button";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {CalendarClockIcon, AirVentIcon, LightbulbIcon} from "lucide-react";
@@ -113,9 +112,11 @@ export default function Page() {
     return (
         <>
             <div className="pl-6 pr-6 pt-4 flex flex-col gap-4">
-                <div className="flex items-center gap-4 ">
-                    <BackButton/>
-                    <h1 className="font-semibold text-lg md:text-2xl">Building Energy Dashboard</h1>
+                <div className="flex items-center gap-4 flex-col xl:flex-row">
+                    <div className="flex items-center gap-4 w-full">
+                        <BackButton/>
+                        <h1 className="font-semibold text-lg md:text-2xl">Building Energy Dashboard</h1>
+                    </div>
                     <div className="ml-auto flex items-center gap-2">
                         <Button className="hidden sm:flex" variant="outline">
                             Today

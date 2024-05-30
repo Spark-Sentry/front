@@ -33,7 +33,7 @@ const EnergyEfficiencyList: React.FC<Props> = ({ energyMeasures }) => {
             {energyMeasures.map((measure, index) => (
                     <Link
                         key={index}
-                        href={`/energy-measures/${measure.id}`}
+                        href={`/measures/${measure.id}`}
                         className="rounded-md border"
                     >
                         <div

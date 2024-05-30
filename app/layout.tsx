@@ -31,9 +31,9 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
             enableSystem
             disableTransitionOnChange
         >
-            <div className="flex">
+            <div className="flex flex-col xl:flex-row">
                 <Sidenav/>
-                <div className="w-full">
+                <div className="w-full xl:ml-56 mt-14 xl:mt-0">
                     <Topnav/>
                     {children}
                 </div>
