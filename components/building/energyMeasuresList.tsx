@@ -9,6 +9,7 @@ interface EnergyMeasure {
     actual: string;
     naturalGasSaved: string;
     electricitySaved: string;
+    payback: string,
     icon: React.ReactNode;
 }
 
@@ -16,36 +17,53 @@ interface Props {
     energyMeasures: EnergyMeasure[];
 }
 
-const div_style = "w-2/6 flex justify-center"
 
 const EnergyEfficiencyList: React.FC<Props> = ({ energyMeasures }) => {
     return (
         <div>
             <div
-                className="flex flex-row justify-around gap-4 border-gray-200 pb-2 dark:border-gray-700">
-                <div className={div_style}>Measure</div>
-                <div className={div_style}>Goal</div>
-                <div className={div_style}>Gas saved</div>
-                <div className={div_style}>Electricity saved</div>
-                <div className={div_style}>Payback today</div>
+                className="hidden xl:flex flex-row justify-around border-gray-200 pb-2 dark:border-gray-700">
+                <div className="flex w-3/12 pl-2">Measure</div>
+                <div className="flex w-2/12">Goal</div>
+                <div className="flex w-2/12">Total saved</div>
+                <div className="flex w-2/12">Gas saved</div>
+                <div className="flex w-2/12">Electricity saved</div>
+                <div className="flex w-2/12">Payback today</div>
             </div>
             <div className="grid gap-4">
-            {energyMeasures.map((measure, index) => (
+                {energyMeasures.map((measure, index) => (
                     <Link
                         key={index}
                         href={`/measures/${measure.id}`}
                         className="rounded-md border"
                     >
-                        <div
-                            className="flex flex-row justify-around gap-4 rounded-lg bg-gray-100 pt-4 pb-4 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700">
-                            <div className={`${div_style} font-medium flex gap-4`}>{measure.icon}{measure.name}</div>
-                            <div className={`${div_style} text-gray-500 dark:text-gray-400`}>{measure.goal}</div>
-                            <div className={`${div_style}`}>{measure.naturalGasSaved}</div>
-                            <div className={`${div_style} font-medium`}>{measure.electricitySaved}</div>
-                            <div className={`${div_style} font-medium`}>{measure.actual}</div>
+                        <div className="flex flex-col xl:flex-row gap-2 xl:gap-0 xl:justify-around rounded-lg bg-gray-100 pt-4 pb-4 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 items-center">
+                            <div className="flex font-medium gap-2 xl:w-3/12 ml-2 items-center">
+                                <div>{measure.icon}</div>
+                                {measure.name}
+                            </div>
+                            <div className="w-full sm:w-1/2 px-8 sm:pl-0 xl:ml-0 flex text-gray-500 dark:text-gray-400 xl:w-2/12 justify-between">
+                                <div className="font-light text-gray-500 xl:hidden justify-between">Goal</div>
+                                {measure.goal}
+                            </div>
+                            <div className="w-full sm:w-1/2 px-8 sm:pl-0 xl:ml-0 flex font-medium xl:w-2/12 justify-between">
+                                <div className="font-light xl:hidden">Total saved</div>
+                                {measure.actual}
+                            </div>
+                            <div className="w-full sm:w-1/2 px-8 sm:pl-0 xl:ml-0 flex font-medium xl:w-2/12 justify-between">
+                                <div className="font-light xl:hidden">Gas save</div>
+                                {measure.naturalGasSaved}
+                            </div>
+                            <div className="w-full sm:w-1/2 px-8 sm:pl-0 xl:ml-0 flex font-medium xl:w-2/12 justify-between">
+                                <div className="font-light xl:hidden">Electricity saved</div>
+                                {measure.electricitySaved}</div>
+                            <div className="w-full sm:w-1/2 px-8 sm:pl-0 xl:ml-0 flex font-medium xl:w-2/12 justify-between">
+                                <div className="font-light xl:hidden">Payback</div>
+                                {measure.payback}
+                            </div>
                         </div>
                     </Link>
-            ))}
+                ))}
             </div>
         </div>
     );

@@ -2,7 +2,7 @@
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
 import {Button} from "@/components/ui/button";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
-import {CalendarClockIcon, AirVentIcon, LightbulbIcon} from "lucide-react";
+import {CalendarClockIcon, AirVentIcon, SquareActivityIcon} from "lucide-react";
 import {Calendar} from "@/components/ui/calendar";
 import React from "react";
 import EnergyMeasuresList from "@/components/building/energyMeasuresList";
@@ -16,50 +16,50 @@ const energyMeasures = [
     {
         id: 1,
         name: "Variable Frequency Drive",
-        goal: "20% reduction",
-        actual: "18% reduction",
-        naturalGasSaved: "12,345 therms",
-        electricitySaved: "45,678 kWh",
-        icon: <LightbulbIcon/>
+        goal: "1 558 GJ",
+        actual: "3 742 GJ",
+        naturalGasSaved: "77 502 m³",
+        electricitySaved: "223 738 kWh",
+        payback: "49 534 $",
+        icon: <SquareActivityIcon/>
     },
     {
         id: 2,
-        name: "HVAC Optimization",
-        goal: "15% reduction",
-        actual: "17% reduction",
-        naturalGasSaved: "6,789 therms",
-        electricitySaved: "23,456 kWh",
+        name: "Heat Pumps",
+        goal: "1 036 GJ",
+        actual: "510 GJ",
+        naturalGasSaved: "16 809 m³",
+        electricitySaved: "-35 179 kWh",
+        payback: "6 533$",
         icon: <AirVentIcon/>
     }
 ];
-const data2022 = [
-    { month: "01/01/2022", savings: 19000 },
-    { month: "02/01/2022", savings: 20000 },
-    { month: "03/01/2022", savings: 16000 },
-    { month: "04/01/2022", savings: 22000 },
-    { month: "05/01/2022", savings: 21000 },
-    { month: "06/01/2022", savings: 23000 },
-    { month: "07/01/2022", savings: 19000 },
-    { month: "08/01/2022", savings: 26000 },
-    { month: "09/01/2022", savings: 21000 },
-    { month: "10/01/2022", savings: 17000 },
-    { month: "11/01/2022", savings: 16000 },
-    { month: "12/01/2022", savings: 13000 },
+const dataA1m3 = [
+    { month: "06/01/2022", savings: 1101 },
+    { month: "07/01/2022", savings: 97 },
+    { month: "08/01/2022", savings: 680 },
+    { month: "09/01/2022", savings: 5264 },
+    { month: "10/01/2022", savings: 7257 },
+    { month: "11/01/2022", savings: 10564 },
+    { month: "12/01/2022", savings: 13419 },
+    { month: "01/01/2022", savings: 14679 },
+    { month: "02/01/2022", savings: 13633 },
+    { month: "03/01/2022", savings: 12179 },
+    { month: "04/01/2022", savings: 9636 },
+    { month: "05/01/2022", savings: 5803 },
 ];
 
-const data2023 = [
-    { month: "01/01/2023", savings: 20000 },
-    { month: "02/01/2023", savings: 22000 },
-    { month: "03/01/2023", savings: 18000 },
-    { month: "04/01/2023", savings: 24000 },
-    { month: "05/01/2023", savings: 20000 },
-    { month: "06/01/2023", savings: 25000 },
-    { month: "07/01/2023", savings: 18000 },
-    { month: "08/01/2023", savings: 28000 },
-    { month: "09/01/2023", savings: 23000 },
-    { month: "10/01/2023", savings: 21000 },
-    { month: "11/01/2023", savings: 19000 },
-    { month: "12/01/2023", savings: 15000 },
+const dataA2m3 = [
+    { month: "06/01/2023", savings: 1403 },
+    { month: "07/01/2023", savings: 70 },
+    { month: "08/01/2023", savings: 968 },
+    { month: "09/01/2023", savings: 2657 },
+    { month: "10/01/2023", savings: 6096 },
+    { month: "11/01/2023", savings: 11573 },
+    { month: "12/01/2023", savings: 13194 },
+    { month: "01/01/2023", savings: 10712 },
+    { month: "02/01/2023", savings: 9769 },
+    { month: "03/01/2023", savings: 7129 },
 ];
 
 const data2024 = [
@@ -77,10 +77,9 @@ const data2024 = [
     { month: "12/01/2023", savings: 17000 },
 ];
 
-const datasets = [
-    { id: '2022', data: data2022 },
-    { id: '2023', data: data2023 },
-    { id: '2024', data: data2024 },
+const datasetsm3 = [
+    { id: '2022', data: dataA1m3 },
+    { id: '2023', data: dataA2m3 },
 ];
 
 const totalDataKwh=[
@@ -152,7 +151,7 @@ export default function Page() {
                 <h1 className="text-2xl font-semibold leading-none tracking-tight">Electricity performance [kWh]</h1>
                 <div className="rounded-lg border bg-card shadow-sm p-2">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <SavingsLineChart datasets={datasets} unit="kWh"/>
+                        <SavingsLineChart datasets={datasetsm3} unit="kWh"/>
                         <PerformanceBarChart data={totalDataKwh} target={target.kWh} unit="kWh"/>
                         <DistributionByMeasure/>
                     </div>
@@ -160,7 +159,7 @@ export default function Page() {
                 <h1 className="text-2xl font-semibold leading-none tracking-tight">Natural Gas performance [m³]</h1>
                 <div className="rounded-lg border bg-card shadow-sm p-2" title="Electricity performance">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <SavingsLineChart datasets={datasets} unit="m³"/>
+                        <SavingsLineChart datasets={datasetsm3} unit="m³"/>
                         <PerformanceBarChart data={totalDataKwh} target={target.m3} unit="m³"/>
                         <DistributionByMeasure/>
                     </div>
