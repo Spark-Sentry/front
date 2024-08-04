@@ -1,7 +1,7 @@
 import React from 'react';
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import SavingsLineChart from "@/components/building/savingsLineChart";
-import PerformanceBarChart from "@/components/building/performanceBarChart";
+import SavingsLineChart from "@/components/energy/savings-line-chart";
+import PerformanceBarChart from "@/components/ui/performance-bar-chart";
 
 interface InfoCardProps {
     title: string;
