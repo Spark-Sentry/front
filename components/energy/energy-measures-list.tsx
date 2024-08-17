@@ -37,8 +37,8 @@ const EnergyEfficiencyList: React.FC<Props> = ({ energyMeasures }) => {
                         href={`/measures/${measure.id}`}
                         className="rounded-md border"
                     >
-                        <div className="flex flex-col xl:flex-row gap-2 xl:gap-0 xl:justify-around rounded-lg bg-gray-100 pt-4 pb-4 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 items-center">
-                            <div className="flex font-medium gap-2 xl:w-3/12 ml-2 items-center">
+                        <div className="font-bold text-lg flex flex-col xl:flex-row gap-2 xl:gap-0 xl:justify-around rounded-lg bg-white  dark:bg-slate-900 bg-opacity-90 pt-4 pb-4 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 items-center">
+                            <div className="flex gap-2 xl:w-3/12 ml-2 items-center">
                                 <div>{measure.icon}</div>
                                 {measure.name}
                             </div>
@@ -46,18 +46,18 @@ const EnergyEfficiencyList: React.FC<Props> = ({ energyMeasures }) => {
                                 <div className="font-light text-gray-500 xl:hidden justify-between">Goal</div>
                                 {measure.goal}
                             </div>
-                            <div className="w-full sm:w-1/2 px-8 sm:pl-0 xl:ml-0 flex font-medium xl:w-2/12 justify-between">
+                            <div className="w-full sm:w-1/2 px-8 sm:pl-0 xl:ml-0 flex xl:w-2/12 justify-between">
                                 <div className="font-light xl:hidden">Total saved</div>
                                 {measure.actual}
                             </div>
-                            <div className="w-full sm:w-1/2 px-8 sm:pl-0 xl:ml-0 flex font-medium xl:w-2/12 justify-between">
+                            <div className="w-full sm:w-1/2 px-8 sm:pl-0 xl:ml-0 flex xl:w-2/12 justify-between">
                                 <div className="font-light xl:hidden">Gas save</div>
                                 {measure.naturalGasSaved}
                             </div>
-                            <div className="w-full sm:w-1/2 px-8 sm:pl-0 xl:ml-0 flex font-medium xl:w-2/12 justify-between">
+                            <div className="w-full sm:w-1/2 px-8 sm:pl-0 xl:ml-0 flex xl:w-2/12 justify-between">
                                 <div className="font-light xl:hidden">Electricity saved</div>
                                 {measure.electricitySaved}</div>
-                            <div className="w-full sm:w-1/2 px-8 sm:pl-0 xl:ml-0 flex font-medium xl:w-2/12 justify-between">
+                            <div className="w-full sm:w-1/2 px-8 sm:pl-0 xl:ml-0 flex xl:w-2/12 justify-between">
                                 <div className="font-light xl:hidden">Payback</div>
                                 {measure.payback}
                             </div>

@@ -25,8 +25,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
       className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4"
       onClick={handleBackdropClick}
     >
-      <div ref={modalRef} className="bg-white rounded-lg shadow-xl w-full max-w-screen-lg max-h-[90vh] flex flex-col">
-        <div className="overflow-y-auto flex-grow p-6">{children}</div>
+      <div ref={modalRef} className="bg-white dark:bg-slate-700 rounded-lg shadow-xl w-full max-w-screen-xl max-h-[90vh] flex flex-col">
+        <div className="overflow-y-auto flex-grow p-2">{children}</div>
         {/*<div className="p-4 border-t">*/}
         {/*<button*/}
         {/*  onClick={onClose}*/}
