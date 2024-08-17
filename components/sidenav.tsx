@@ -13,25 +13,25 @@ interface NavItemProps {
 function NavItem({ icon, text, href }: NavItemProps) {
     return (
         <Link key={text} href={href || "#"}>
-            <div className="flex items-center px-4 py-2 rounded-md hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors cursor-pointer">
+            <div className="flex items-center xl:px-4 py-2 rounded-md hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors cursor-pointer">
                 {icon}
-                <span>{text}</span>
+                <span className="hidden xl:block">{text}</span>
             </div>
         </Link>
     );
 }
 const Sidenav = () => {
     return (
-        <div className="flex h-screen">
-            <div className="bg-gray-100 text-gray-900 w-64 p-6 flex flex-col justify-between shadow-lg dark:bg-gray-800 dark:border-gray-800">
-                <div>
+        <div className="fixed flex h-14 xl:h-screen xl:w-52 z-50">
+            <div className="bg-gray-100 text-gray-900 w-screen xl:w-64 p-2 xl:p-6 flex flex-row xl:flex-col justify-between shadow-sm dark:bg-gray-800 dark:border-gray-800">
+                <div className="flex flex-row xl:flex-col w-full justify-center">
                     <Link key="Home" href="/">
                         <div className="flex items-center mb-8">
                             <SparklesIcon className="h-10 w-10 mr-2 text-gray-800 dark:text-gray-200" />
-                            <span className="text-xl font-bold dark:text-gray-200">SparkSentry</span>
+                            <span className="text-xl font-bold dark:text-gray-200 hidden xl:block">SparkSentry</span>
                         </div>
                     </Link>
-                    <nav className="space-y-2">
+                    <nav className="xl:space-y-2 flex flex-row xl:flex-col w-full justify-center gap-2 sm:gap-6 xl:gap-0">
                         <NavItem icon={<BuildingOffice2Icon className={icon_style} />} text="Buildings" href="/buildings" />
                         <NavItem icon={<WrenchIcon className={icon_style} />} text="HVAC" href="/hvac"/>
                         <NavItem icon={<GaugeIcon className={icon_style} />} text="Energy" href="/energy"/>

@@ -1,196 +1,128 @@
 'use client'
-import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
-import { ResponsiveLine } from "@nivo/line"
-import {Button} from "@/components/ui/button";
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
-import {CalendarClockIcon, AirVentIcon, LightbulbIcon} from "lucide-react";
-import {Calendar} from "@/components/ui/calendar";
-import React from "react";
-import EnergyMeasuresList from "@/components/building/energyMeasuresList";
-import {BackButton} from "@/components/buttons";
-import FinancialSummaryTable from "@/components/building/financialSummaryTable";
-import SavingsLineChart from "@/components/building/savingsLineChart";
-import PerformanceBarChart from "@/components/building/performanceBarChart";
-import DistributionByMeasure from "@/components/building/distributionByMeasure";
+import React, { useCallback, useState } from "react";
+import FinancialDashboard from "@/components/financial/financial-dashboard";
+import OperationDashboard from "@/components/operation/operation-dashboard";
+import EnergyDashboard from "@/components/energy/energy-dashboard";
+import FinancialOverview from "@/components/financial/financial-overview";
+import Modal from "@/components/ui/modal";
+import EnergyOverview from "@/components/energy/energy-overview";
+import OperationOverview from "@/components/operation/operation-overview";
+import PeriodsDashboard from "@/components/periods/periods-dashboard";
+import PeriodsOverview from "@/components/periods/periods-overview";
 
-const energyMeasures = [
-    {
-        id: 1,
-        name: "Variable Frequency Drive",
-        goal: "20% reduction",
-        actual: "18% reduction",
-        naturalGasSaved: "12,345 therms",
-        electricitySaved: "45,678 kWh",
-        icon: <LightbulbIcon/>
+type DashboardSection = "financial" | "energy" | "operation" | "periods";
+
+interface Period {
+    name: string;
+    start: Date;
+    end: Date;
+}
+
+interface Dates {
+    reference: Period;
+    performance: Period[];
+}
+
+const dates: Dates = {
+    reference: {
+        name: "Reference Period",
+        start: new Date("2019-12-31"),
+        end: new Date("2020-12-30")
     },
-    {
-        id: 2,
-        name: "HVAC Optimization",
-        goal: "15% reduction",
-        actual: "17% reduction",
-        naturalGasSaved: "6,789 therms",
-        electricitySaved: "23,456 kWh",
-        icon: <AirVentIcon/>
-    }
-];
-const data2022 = [
-    { month: "01/01/2022", savings: 19000 },
-    { month: "02/01/2022", savings: 20000 },
-    { month: "03/01/2022", savings: 16000 },
-    { month: "04/01/2022", savings: 22000 },
-    { month: "05/01/2022", savings: 21000 },
-    { month: "06/01/2022", savings: 23000 },
-    { month: "07/01/2022", savings: 19000 },
-    { month: "08/01/2022", savings: 26000 },
-    { month: "09/01/2022", savings: 21000 },
-    { month: "10/01/2022", savings: 17000 },
-    { month: "11/01/2022", savings: 16000 },
-    { month: "12/01/2022", savings: 13000 },
-];
-
-const data2023 = [
-    { month: "01/01/2023", savings: 20000 },
-    { month: "02/01/2023", savings: 22000 },
-    { month: "03/01/2023", savings: 18000 },
-    { month: "04/01/2023", savings: 24000 },
-    { month: "05/01/2023", savings: 20000 },
-    { month: "06/01/2023", savings: 25000 },
-    { month: "07/01/2023", savings: 18000 },
-    { month: "08/01/2023", savings: 28000 },
-    { month: "09/01/2023", savings: 23000 },
-    { month: "10/01/2023", savings: 21000 },
-    { month: "11/01/2023", savings: 19000 },
-    { month: "12/01/2023", savings: 15000 },
-];
-
-const data2024 = [
-    { month: "01/01/2023", savings: 18000 },
-    { month: "02/01/2023", savings: 20000 },
-    { month: "03/01/2023", savings: 21000 },
-    { month: "04/01/2023", savings: 23000 },
-    { month: "05/01/2023", savings: 19000 },
-    { month: "06/01/2023", savings: 23000 },
-    { month: "07/01/2023", savings: 16000 },
-    { month: "08/01/2023", savings: 18000 },
-    { month: "09/01/2023", savings: 24000 },
-    { month: "10/01/2023", savings: 25000 },
-    { month: "11/01/2023", savings: 21000 },
-    { month: "12/01/2023", savings: 17000 },
-];
-
-const datasets = [
-    { id: '2022', data: data2022 },
-    { id: '2023', data: data2023 },
-    { id: '2024', data: data2024 },
-];
-
-const totalDataKwh=[
-    { name: "2022", count: 12000 },
-    { name: "2023", count: 12560 },
-    { name: "2024", count: 13400 },
-]
-
-const totalData$=[
-    { name: "2022", count: 33000 },
-    { name: "2023", count: 37000 },
-    { name: "2024", count: 35500 },
-]
-
-const totalDataGES=[
-    { name: "2022", count: 111 },
-    { name: "2023", count: 157 },
-    { name: "2024", count: 170 },
-]
-
-const target = {
-    GES:130,
-    $:34000,
-    kWh:12000,
-    m3:9000
+    performance: [
+        {
+            name: "Year 1",
+            start: new Date("2021-03-31"),
+            end: new Date("2022-03-30")
+        },
+        {
+            name: "Year 2",
+            start: new Date("2022-03-31"),
+            end: new Date("2023-03-30")
+        },
+        {
+            name: "Year 3",
+            start: new Date("2023-03-31"),
+            end: new Date("2024-03-30")
+        },
+        {
+            name: "Year 4",
+            start: new Date("2024-03-31"),
+            end: new Date("2025-03-30")
+        }
+    ]
 };
 
-export default function Page() {
-    return (
-        <>
-            <div className="pl-6 pr-6 pt-4 flex flex-col gap-4">
-                <div className="flex items-center gap-4 ">
-                    <BackButton/>
-                    <h1 className="font-semibold text-lg md:text-2xl">Building Energy Dashboard</h1>
-                    <div className="ml-auto flex items-center gap-2">
-                        <Button className="hidden sm:flex" variant="outline">
-                            Today
-                        </Button>
-                        <Button className="hidden md:flex" variant="outline">
-                            This Month
-                        </Button>
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button className="w-[280px] justify-start text-left font-normal" id="date"
-                                        variant="outline">
-                                    <CalendarClockIcon className="mr-2 h-4 w-4"/>
-                                    June 01, 2023 - June 30, 2023
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent align="end" className="w-auto p-0">
-                                <Calendar initialFocus mode="range" numberOfMonths={2}/>
-                            </PopoverContent>
-                        </Popover>
-                    </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <DashboardCard title="Key numbers">
-                        <FinancialSummaryTable/>
-                    </DashboardCard>
-                    <DashboardCard title="Tons GES saved per year">
-                        <PerformanceBarChart data={totalDataGES} target={target.GES} unit="t GES"/>
-                    </DashboardCard>
-                    <DashboardCard title="$ saved per year">
-                        <PerformanceBarChart data={totalData$} target={target.$} unit="$ (taxes inc.)"/>
-                    </DashboardCard>
-                </div>
-                <h1 className="text-2xl font-semibold leading-none tracking-tight">Electricity performance [kWh]</h1>
-                <div className="rounded-lg border bg-card shadow-sm p-2">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <SavingsLineChart datasets={datasets} unit="kWh"/>
-                        <PerformanceBarChart data={totalDataKwh} target={target.kWh} unit="kWh"/>
-                        <DistributionByMeasure/>
-                    </div>
-                </div>
-                <h1 className="text-2xl font-semibold leading-none tracking-tight">Natural Gas performance [m³]</h1>
-                <div className="rounded-lg border bg-card shadow-sm p-2" title="Electricity performance">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <SavingsLineChart datasets={datasets} unit="m³"/>
-                        <PerformanceBarChart data={totalDataKwh} target={target.m3} unit="m³"/>
-                        <DistributionByMeasure/>
-                    </div>
-                </div>
-                <DashboardCard title="Energy Efficiency Measures">
-                    <EnergyMeasuresList energyMeasures={energyMeasures}/>
-                </DashboardCard>
-            </div>
-        </>
-    )
-}
-
-interface DashboardCardProps {
-    title: string;
-    children: React.ReactNode;
-    className?: string;
-}
-
-function DashboardCard({title, children, className}: DashboardCardProps) {
-    return (
-        <Card className={className}>
-            <CardHeader>
-                <CardTitle>{title}</CardTitle>
-            </CardHeader>
-            <CardContent>{children}</CardContent>
-        </Card>
-    )
-}
-
 interface DashboardItemProps {
-    label: string;
-    value: string;
+    label: DashboardSection;
+    title: string;
+    content: React.ReactNode;
 }
 
+const dashboardItems: DashboardItemProps[] = [
+    { label: "financial", title: "Financial", content: <FinancialOverview /> },
+    { label: "energy", title: "Energy", content: <EnergyOverview /> },
+    { label: "operation", title: "Operation", content: <OperationOverview /> },
+    { label: "periods", title: "Periods", content: <PeriodsOverview dates={dates}/> },
+];
+
+export default function Page() {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [section, setSection] = useState<DashboardSection | null>(null);
+
+    const openModal = useCallback(() => setIsModalOpen(true), []);
+    const closeModal = useCallback(() => setIsModalOpen(false), []);
+
+    const handleOpenDashboard = useCallback((selectedSection: DashboardSection) => {
+        setSection(selectedSection);
+        openModal();
+    }, [openModal]);
+
+    const renderDashboardContent = () => {
+        switch (section) {
+            case "financial":
+                return <FinancialDashboard />;
+            case "energy":
+                return <EnergyDashboard />;
+            case "operation":
+                return <OperationDashboard />;
+            case "periods":
+                return <PeriodsDashboard dates={dates} />;
+            default:
+                return null;
+        }
+    };
+
+    return (
+        <div className="flex flex-col gap-4 p-4 h-[calc(100vh-50px)] overflow-hidden">
+            <div className="flex-1 flex flex-col md:flex-row gap-4 min-h-0">
+                {dashboardItems.slice(0, 3).map((item) => (
+                    <div
+                        key={item.label}
+                        className="flex-1 border-2 rounded-xl overflow-hidden cursor-pointer"
+                        onClick={() => handleOpenDashboard(item.label)}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`Open ${item.title} dashboard`}
+                    >
+                        <div className="h-full overflow-auto">
+                            {item.content}
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <div className="h-1/5 min-h-[100px] border-2 rounded-xl overflow-hidden cursor-pointer"
+                 onClick={() => handleOpenDashboard("periods")}
+                 role="button"
+                 tabIndex={0}
+                 aria-label="Open Periods dashboard">
+                <div className="h-full overflow-auto">
+                    <PeriodsOverview dates={dates}/>
+                </div>
+            </div>
+            <Modal isOpen={isModalOpen} onClose={closeModal}>
+                {renderDashboardContent()}
+            </Modal>
+        </div>
+    );
+}
