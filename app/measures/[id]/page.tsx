@@ -107,7 +107,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                                 <CardTitle>Electricity savings - kWh</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <SavingsLineChart datasets={datasets} unit="m³"/>
+                                <SavingsLineChart datasets={datasets} unit="m³" height="300px"/>
                             </CardContent>
                         </Card>
                         <Card>
@@ -115,7 +115,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                                 <CardTitle>Natural gas savings - m³</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <SavingsLineChart datasets={datasets} unit="kWh"/>
+                                <SavingsLineChart datasets={datasets} unit="kWh" height="300px"/>
                             </CardContent>
                         </Card>
                     </div>
