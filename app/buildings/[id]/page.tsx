@@ -9,6 +9,7 @@ import EnergyOverview from "@/components/energy/energy-overview";
 import OperationOverview from "@/components/operation/operation-overview";
 import PeriodsDashboard from "@/components/periods/periods-dashboard";
 import PeriodsOverview from "@/components/periods/periods-overview";
+import InfosOverview from "@/components/building/infos";
 
 type DashboardSection = "financial" | "energy" | "operation" | "periods";
 
@@ -63,7 +64,6 @@ const dashboardItems: DashboardItemProps[] = [
     { label: "financial", title: "Financial", content: <FinancialOverview /> },
     { label: "energy", title: "Energy", content: <EnergyOverview /> },
     { label: "operation", title: "Operation", content: <OperationOverview /> },
-    { label: "periods", title: "Periods", content: <PeriodsOverview dates={dates}/> },
 ];
 
 export default function Page() {
@@ -94,9 +94,12 @@ export default function Page() {
     };
 
     return (
-        <div className="flex flex-col gap-4 p-4 h-[calc(100vh-50px)] overflow-hidden">
+        <div className="flex flex-col gap-4 py-0 px-4 h-[calc(100vh-50px)] overflow-hidden">
+            <div className="w-full rounded-xl overflow-hidden">
+                <InfosOverview />
+            </div>
             <div className="flex-1 flex flex-col md:flex-row gap-4 min-h-0">
-                {dashboardItems.slice(0, 3).map((item) => (
+                {dashboardItems.map((item) => (
                     <div
                         key={item.label}
                         className="flex-1 border-2 rounded-xl overflow-hidden cursor-pointer"

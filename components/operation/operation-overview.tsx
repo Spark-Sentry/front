@@ -23,7 +23,7 @@ const operationalParameters: OperationalParameter[] = [
 const OperationOverview: React.FC = () => {
 
     return (
-        <OverviewCard title="Operation" icon={<GaugeIcon className="w-8 h-8 text-primary" />}>
+        <OverviewCard title="Operation" icon={<GaugeIcon className="w-6 h-6 text-primary" />}>
             <div className="grid grid-cols-3 gap-2 mb-4 md:hidden xl:grid text-sm font-semibold text-muted-foreground">
                 <div>Parameter</div>
                 <div className="text-right">Current Value</div>

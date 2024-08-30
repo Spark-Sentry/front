@@ -25,7 +25,7 @@ const SavingsLineChart: React.FC<LineChartProps> = ({ datasets, unit, height }) 
 
     console.log(datasets)
 
-    // Transform the input data to the format required by Recharts
+    // Transform the input data.ts to the format required by Recharts
     const formattedData = datasets[0].data.map(point => {
         const formattedMonth = new Date(point.month).toLocaleString('default', { month: 'short' });
 

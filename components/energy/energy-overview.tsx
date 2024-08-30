@@ -64,7 +64,7 @@ const EnergyOverview: React.FC = () => {
 
     return (
         <div>
-            <OverviewCard title="Performances" icon={<TrendingUp className="w-8 h-8 text-muted-foreground" />}>
+            <OverviewCard title="Performances" icon={<TrendingUp className="w-6 h-6 text-muted-foreground" />}>
                 <div className="flex flex-col gap-2">
                 <TotalCard unit="m3" values={totals.m3}/>
                 <TotalCard unit="kWh" values={totals.kWh}/>
