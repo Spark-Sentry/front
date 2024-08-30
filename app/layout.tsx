@@ -1,44 +1,44 @@
-import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google"
-import "./globals.css";
-import { cn } from "@/lib/utils"
-import {ThemeProvider} from "@/components/theme-provider";
-import Sidenav from "@/components/sidenav";
+import { Toaster } from '@/components/ui/toaster';
+import type { Metadata } from 'next';
+import NextTopLoader from 'nextjs-toploader';
+import { Inter } from 'next/font/google';
+import './globals.css';
 import React from "react";
-import Topnav from "@/components/topnav";
+import Providers from "@/components/layout/providers";
+import Sidebar from "@/components/layout/sidebar";
+import Header from "@/components/layout/header";
+import {getSession} from "@/actions/getSession";
 
-
-const fontSans = FontSans({
-    subsets: ["latin"],
-    variable: "--font-sans",
-})
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-    title: "Spark Sentry - Homepage",
-    description: "",
+    title: 'Next Shadcn',
+    description: 'Basic dashboard with Next.js and Shadcn'
 };
 
-export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
+export default async function RootLayout({
+                                             children
+                                         }: {
+    children: React.ReactNode;
+}) {
+    const session = await getSession()
     return (
         <html lang="en">
-        <body className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            fontSans.variable
-        )}>
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
+        <body
+            className={`${inter.className} overflow-hidden `}
+            suppressHydrationWarning={true}
         >
-            <div className="flex flex-col xl:flex-row">
-                <Sidenav/>
-                <div className="w-full xl:ml-56 mt-14 xl:mt-0">
-                    <Topnav/>
+        <NextTopLoader showSpinner={false} />
+        <Providers >
+            <Toaster />
+            <div className="flex">
+                <Sidebar />
+                <main className="w-full flex-1 overflow-hidden">
+                    <Header session={session}/>
                     {children}
-                </div>
+                </main>
             </div>
-        </ThemeProvider>
+        </Providers>
         </body>
         </html>
     );
