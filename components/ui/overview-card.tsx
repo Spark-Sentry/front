@@ -10,9 +10,9 @@ interface CustomCardProps {
 const OverviewCard: React.FC<CustomCardProps> = ({ title, icon, children }) => {
     return (
         <Card className="overflow-hidden">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 px-4 py-2 bg-gray-100 dark:bg-slate-800 border-b">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 px-4 py-1 bg-gray-100 dark:bg-slate-800 border-b">
                 <div>
-                    <CardTitle className="text-lg font-bold">{title}</CardTitle>
+                    <CardTitle className="text-md font-bold">{title}</CardTitle>
                 </div>
                 {icon}
             </CardHeader>
