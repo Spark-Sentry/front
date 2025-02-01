@@ -1,6 +1,6 @@
 import * as z from 'zod';
-import {RegisterSchema} from "@/lib/schemas/auth";
-import {postRegister} from "@/lib/endpoints/auth";
+import { RegisterSchema } from '@/lib/schemas/auth';
+import { postRegister } from '@/lib/endpoints/auth';
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values);
@@ -9,16 +9,26 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     return { error: 'Invalid fields!' };
   }
 
-  const { name, email, password } = validatedFields.data;
+  const { firstName, lastName, email, password, account } = validatedFields.data;
 
   try {
-    const response = await postRegister(name, email, password);
+    const response = await postRegister({
+      email,
+      password,
+      firstName,
+      lastName,
+      account: {
+        name: account.name,
+        contactEmail: account.contactEmail,
+        contactPhone: account.contactPhone,
+      },
+    });
 
     if (response) {
       return { success: 'Verify your emails!' };
     }
   } catch (error: any) {
-    console.log('Sorry, error when creating user.', error);
+    console.log('Error creating user:', error);
     return { error: error.message };
   }
 };
