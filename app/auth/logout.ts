@@ -8,12 +8,10 @@ export const logout = async () => {
 
     if (!session) {
       console.error('No active session found');
-      return { success: false, error: 'No active session', shouldRedirect: true };
+      return { success: false, error: 'No active session' };
     }
 
     session.destroy();
-
-    console.log('sessionLOGOUT:', session);
 
     return { success: true, shouldRedirect: true };
   } catch (error) {

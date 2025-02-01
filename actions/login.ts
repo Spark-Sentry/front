@@ -19,13 +19,13 @@ export const login = async (values: TypeOf<typeof LoginSchema>, callbackUrl: str
 
   try {
     const response = await postLogin(email, password);
-    if (response?.token) {
-      session.id = response?.user.id;
-      session.username = response?.user.name;
-      session.email = response?.user.email;
+    if (response?.data) {
+      // session.id = response?.user.id;
+      // session.username = response?.user.name;
+      // session.email = response?.user.email;
       session.isLoggedIn = true;
-      session.roles = response?.user.roles;
-      session.token = response.token;
+      // session.roles = response?.user.roles;
+      session.token = response.data;
 
       await session.save();
     }
