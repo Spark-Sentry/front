@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { TrendingUp, TrendingDown, Clock, LineChart, ArrowRight, HandCoins } from 'lucide-react';
 import OverviewCard from '@/components/ui/overview-card';
 
